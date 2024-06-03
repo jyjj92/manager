@@ -41,9 +41,13 @@ public class RDSController {
     public ResponseEntity<PHDB> singleTx(@RequestBody PHDB phdbUser) {
         TransactionStatus transactionStatus = customTransactionManager.beginTransaction();
 
-        
+
         phdbManager.save(phdbUser);
-        phdbManager.save(phdbUser);
+        PHDB phdbUser2 = new PHDB();
+        phdbUser2.setName(phdbUser.getName() + "1");
+        phdbUser2.setPaymentType(phdbUser.getPaymentType());
+        phdbUser2.setVehicleType(phdbUser.getVehicleType());
+        phdbManager.save(phdbUser2);
         customTransactionManager.commitTransaction(transactionStatus);
 
         return ResponseEntity.ok(phdbUser);
@@ -53,7 +57,11 @@ public class RDSController {
     public ResponseEntity<PHDB> multipleTx(@RequestBody PHDB phdbUser) {
 
         phdbManager.save(phdbUser);
-        phdbManager.save(phdbUser);
+        PHDB phdbUser2 = new PHDB();
+        phdbUser2.setName(phdbUser.getName() + "1");
+        phdbUser2.setPaymentType(phdbUser.getPaymentType());
+        phdbUser2.setVehicleType(phdbUser.getVehicleType());
+        phdbManager.save(phdbUser2);
 
         return ResponseEntity.ok(phdbUser);
     }
